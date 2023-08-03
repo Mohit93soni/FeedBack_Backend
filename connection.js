@@ -1,17 +1,25 @@
-var mysql = require('mysql')
+var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Tulsi@2212',
-  database: 'feedback_app',
+  host: "localhost",
+  user: "root",
+  password: "Tulsi@2212",
+  database: "feedback_app",
   port: 3306,
-  multipleStatements: true
-})
+  multipleStatements: true,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+});
 
-connection.connect(function(err) {
-  if (err) throw err
-  console.log('You are now connected...')
-})
+//TECHDET: Connect close logic is not yet iplemented
 
-module.exports =connection;
+connection.connect(function (err) {
+  if (err) throw err;
+  console.log("You are now connected...");
+});
+
+module.exports = connection;
